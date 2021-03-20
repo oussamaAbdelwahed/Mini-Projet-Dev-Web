@@ -1,0 +1,32 @@
+<div class="container">
+    <br>
+      <div class="row">
+        <div class="col-12">
+          <br>
+          <div class="text-center">
+            <img src="assets/img/key.svg" width="150em">
+            <br><br>
+            <h2>Se Connecter</h2>
+          </div>
+        </div>
+  
+     <form [formGroup]="loginForm" class="col-12 mx-auto" (ngSubmit)="onSubmitLoginForm()">
+        <div class="col-7 mx-auto">
+          <br>
+            <input type="text" class="form-control my-input" placeholder="Username" formControlName="email">
+            <input type="password" class="form-control my-input" placeholder="Password" formControlName="password">    
+            <input type="submit" value="Se Connecter" class="btn btn-primary" style="width:100%;" [disabled]="loginForm.invalid">
+            <p *ngIf="httpMessages" [ngClass]="styleDecision()"> {{ httpMessages }} </p>
+        </div>
+    </form>
+
+     <div class="col-12 text-center">
+        <br>
+        <h6><a href="#">J'ai Oublié mon mot de passe</a></h6>
+        <h6>Ou</h6>
+        <h6><a routerLink="/SignUp">Créer un nouveau compte</a></h6>
+     </div>
+  </div>
+
+</div>
+   

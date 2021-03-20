@@ -1,0 +1,78 @@
+
+  * {
+    font-family: 'Raleway', sans-serif !important;
+  }
+  #nouvelle_cal:hover {
+    color: #27ae60;
+  }
+  #ouvrir-cal:hover {
+    color: blue;
+    cursor: pointer;
+  }
+
+
+.login-btn {
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background: #09f;
+  width: 250px;
+  text-align: center;
+  margin: 0 auto;
+  cursor:pointer;
+}
+
+.login-btn:active {
+  background: #006BB2;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.drop {
+  height:330px !important;
+  width: 80% !important;
+}
+* {
+  font-family: 'Raleway', sans-serif !important;
+}
+#nouvelle_cal:hover {
+  color: #27ae60;
+}
+#ouvrir-cal:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.my-input {
+  border-radius: 50px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color:lavender;
+  border-color:  lavender;
+  text-align:center;
+ 
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
