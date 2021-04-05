@@ -66,10 +66,10 @@ export class AppGlobals {
       for (const [key, value] of Object.entries(userObject)) {
         switch(key) {
             case 'firstName' : 
-               user.firstName = value
+               user.firstname = value
             break;
             case 'lastName' : 
-               user.lastName = value
+               user.lastname = value
             break;
             case 'email' : 
                user.email = value
@@ -79,6 +79,9 @@ export class AppGlobals {
             break;
             case 'role' : 
                user.role = value
+            break;
+            case 'dateNaiss' : 
+              user.dateNaiss = value
             break;
         }
       }

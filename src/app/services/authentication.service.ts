@@ -45,6 +45,7 @@ export class AuthService {
         },
         (errorData: HttpErrorResponse) => {
           if (errorData.hasOwnProperty('error')) {
+               console.log(errorData.error)
                this.emitAuthSubject(errorData.error["message"]);
           } else {
               this.emitAuthSubject(false);

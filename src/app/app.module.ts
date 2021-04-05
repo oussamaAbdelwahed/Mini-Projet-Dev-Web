@@ -9,6 +9,10 @@ import { SpectatorDashboardComponent } from './components/dashboards/spectator-d
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptor } from './interceptors/app.interceptor';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
+import { ModalComponent } from './ui-extras/modal/modal.component';
 
 
 @NgModule({
@@ -16,7 +20,11 @@ import { AppInterceptor } from './interceptors/app.interceptor';
     AppComponent,
     LoginComponent,
     AdminDashboardComponent,
-    SpectatorDashboardComponent
+    SpectatorDashboardComponent,
+    WelcomeComponent,
+    SignupComponent,
+    BuyTicketComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

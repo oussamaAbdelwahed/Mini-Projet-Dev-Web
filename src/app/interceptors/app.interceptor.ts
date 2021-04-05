@@ -39,7 +39,7 @@ export class AppInterceptor implements HttpInterceptor {
         return next.handle(cloned);
       } else {
          //this.router.navigate(['Login']);
-         this.router.navigate(['']);
+         this.router.navigate(['login']);
          if(!req.url.includes("generate-token")) {
            return next.handle(req).pipe(catchError(x => this.handleAuthError(x)));
           }else    {

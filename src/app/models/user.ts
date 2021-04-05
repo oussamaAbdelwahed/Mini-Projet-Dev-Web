@@ -1,9 +1,13 @@
 export class UserModel {
     constructor(
-                  public firstName: string | undefined,
-                  public lastName: string,
+                  public firstname: string | undefined,
+                  public lastname: string,
                   public email: string,
                   public role?: string,
-                  public id?: number
+                  public id?: number,
+                  public cin?:number,
+                  public dateNaiss?: Date,
+                  public sex?: string,
+                  public password?: string
     ) {}
 }

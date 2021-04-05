@@ -1,0 +1,85 @@
+<app-modal [textToShow]="modalText" [show]="showModal" [redirectURL]="redirectURL"></app-modal>
+<div class="container">
+    <br>
+        <div class="row">
+            
+        <div class="col-12">
+          <br>
+          <div class="text-center">
+            <img src="assets/img/account.svg" width="100em">
+            <br>
+            <h2>Créer Un Compte</h2>
+          </div>
+        </div>
+  
+     <form [formGroup]="signUpForm" class="col-12 mx-auto" (ngSubmit)="onSubmitSignUpForm()">
+        <div class="col-7 mx-auto">
+            <span class="text-danger">* Tous les champs sont obligatoires</span><br>
+          <br>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="prenom" #in1 formControlName="firstName">
+              <span class="help-block text-danger" *ngIf="signUpForm.controls.firstName.touched && signUpForm.controls.firstName.invalid">champ obligatoire</span>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="nom" formControlName="lastName">  
+              <span class="help-block text-danger" *ngIf="signUpForm.controls.lastName.touched && signUpForm.controls.lastName.invalid">champ obligatoire</span>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="email" formControlName="email">  
+              <span class="help-block text-danger" *ngIf="signUpForm.controls.email.touched && signUpForm.controls.email.invalid">format invalide</span>
+            </div>
+            <div class="form-group">
+              <input (input)="checkPwd()" type="password" class="form-control" placeholder="mot de passe(8 caractéres au minimum)" formControlName="password">
+              <span class="help-block text-danger" *ngIf="signUpForm.controls.password.touched && signUpForm.controls.password.invalid">8 caractéres au minimum</span>
+            </div>
+            <div class="form-group">
+              <input (input)="checkPwd()" type="password" class="form-control" placeholder="confirmer mot de passe" formControlName="checkPassword">
+              <span class="help-block text-danger" *ngIf="(signUpForm.controls.checkPassword.touched && signUpForm.controls.checkPassword.invalid) || diffPwd">les deux mot de passes sont differents</span>
+            </div> 
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="cin" formControlName="cin">
+                <span class="help-block text-danger" *ngIf="signUpForm.controls.cin.touched && signUpForm.controls.cin.invalid">valeur numérique de 8 chiffres</span>
+            </div>
+            <div class="form-group">
+              <select  formControlName="sex" class="form-control">
+                <option value="MAL" selected >Homme</option>
+                <option value="FEM">Femme</option>
+              </select>      
+              <span class="help-block text-danger" *ngIf="signUpForm.controls.sex.touched && signUpForm.controls.sex.invalid">choisir votre sex</span>      
+            </div>
+            <div class="form-group">
+                <input type="date" formControlName="birthDate"  placeholder="saisir votre date de naissance"   required class="form-control"/>
+                <span class="help-block text-danger" *ngIf="signUpForm.controls.birthDate.touched && signUpForm.controls.birthDate.invalid">choisir une date de naissance</span>
+            </div>
+            <!--<div class="form-group">
+              <select  formControlName="hisBoss" class="form-control">
+                <option value="" disabled>Supérieure Hiérarchique</option>
+                <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select aria-placeholder="role" required formControlName="role" class="form-control ">
+                <option value="" disabled>poste utilisateur dans la sociéte</option>
+                <option value="admin">Admin</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employé</option>
+              </select>
+            </div>-->
+              <input type="submit" class="login-btn noselect btn btn-primary" value="Creer mon compte" style="width:100%;" [disabled]="signUpForm.invalid || diffPwd"/>
+              <p *ngIf="httpErrors" [class]="styleDecision()">{{httpErrors.message}}</p>
+        </div>
+  </form>
+         <div class="col-12">
+           <br>
+         <!--<h6 class="text-center"><a routerLink="/Login">Si Vous Avez Un Compte, Cliquez Ici</a></h6>  -->
+        </div>
+        
+           
+          
+           
+        
+        
+        </div>
+    </div>
+   
+  

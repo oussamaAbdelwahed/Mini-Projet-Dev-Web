@@ -1,0 +1,71 @@
+<div class="container">
+    <br>
+        <div class="row">
+            
+        <div class="col-12">
+          <br>
+          <div class="text-center">
+            <img src="assets/img/ticket.svg" width="100em">
+            <br>
+            <h2>Acheter Votre Ticket</h2>
+          </div>
+        </div>
+  
+     <form [formGroup]="buyTicketForm" class="col-12 mx-auto" (ngSubmit)="onSubmitForm()">
+        <div class="col-7 mx-auto">
+            <span class="text-danger">* Tous les champs sont obligatoires</span><br>
+          <br>
+            <div class="form-group">
+              <label for="game">match</label>
+              <select id="game"  formControlName="game" class="form-control">
+                <option *ngFor="let game of games" [value]="game.id" selected>{{game.homeTeam?.teamName}} - {{game.awayTeam?.teamName}}</option>
+              </select>      
+              <span class="help-block text-danger" *ngIf="buyTicketForm.controls.game.touched && buyTicketForm.controls.game.invalid">choisir le match</span>      
+            </div>
+
+            <div class="form-group">
+                <label for="nbrTickets">nombre de tickets</label>
+                <select id="nbrTickets"  formControlName="nbrTickets" class="form-control">
+                  <option value="1" selected >1 Ticket</option>
+                  <option value="2">2 Tickets</option>
+                </select>      
+                <span class="help-block text-danger" *ngIf="buyTicketForm.controls.nbrTickets.touched && buyTicketForm.controls.nbrTickets.invalid">choisir le match</span>      
+            </div>
+
+            <div class="form-group">
+                <label for="ticketType">type de ticket</label>
+                <select id="ticketType"  formControlName="ticketType" class="form-control">
+                  <option value="VIRAGE" selected >VIRAGE (25$)</option>
+                  <option value="PEULOUSE">PEULOUSE (30$)</option>
+                  <option value="ENCEINTE_INF">ENCEINTE INFERIEURE (60$)</option>
+                  <option value="ENCEINTE_SUP">ENCEINTE SUPERIEURE(100$)</option>
+                </select>      
+                <span class="help-block text-danger" *ngIf="buyTicketForm.controls.nbrTickets.touched && buyTicketForm.controls.nbrTickets.invalid">choisir le match</span>      
+            </div>
+         
+            <!--<div class="form-group">
+              <select  formControlName="hisBoss" class="form-control">
+                <option value="" disabled>Supérieure Hiérarchique</option>
+                <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select aria-placeholder="role" required formControlName="role" class="form-control ">
+                <option value="" disabled>poste utilisateur dans la sociéte</option>
+                <option value="admin">Admin</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employé</option>
+              </select>
+            </div>-->
+              <input type="submit" class="login-btn noselect btn btn-primary" value="Acheter" style="width:100%;" [disabled]="buyTicketForm.invalid"/>
+              <!--<p *ngIf="httpErrors" [class]="styleDecision()">{{httpErrors.message}}</p>-->
+        </div>
+  </form>
+        <div class="col-12">
+        <br>
+         <!--<h6 class="text-center"><a routerLink="/Login">Si Vous Avez Un Compte, Cliquez Ici</a></h6>  -->
+        </div>
+
+        </div>
+    </div>
+   
