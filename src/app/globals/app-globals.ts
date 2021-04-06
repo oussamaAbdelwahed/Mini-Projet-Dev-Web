@@ -5,6 +5,7 @@ import { UserModel } from "../models/user";
 @Injectable( {providedIn: 'root'})
 export class AppGlobals {
     readonly ApiBaseUrl: string = "http://localhost:8080";
+    readonly TichetType = {VIRAGE:"VIRAGE",PELOUSE:"PELOUSE",ENCEINTE_INF:"ENCEINTE_INF",ENCEINTE_SUP:"ENCEINTE_SUP"}
 
     getUTF8(base64string: string, key?: string) {
       const tokenThreeParts = base64string.split(".");
@@ -18,31 +19,37 @@ export class AppGlobals {
     }
 
     //false method --> should be getUserRoles: List<String> and with another login of IMPL ---> TODO NEXT TIME
-    getUserRole(token: string) {
-      const userInfos = this.getUTF8(token);
-      if (userInfos) {
+    getUserRole(token: string | null) {
+     if(token !== null) {
+       const userInfos = this.getUTF8(token);
+       if (userInfos) {
         const role = userInfos.scopes
         return role;
-      }
-      return '';
+       }
+     }
+     return '';
     }
 
-    getUserIdentifier(token: string): number {
-      const userInfos = this.getUTF8(token);
-      if (userInfos) {
+    getUserIdentifier(token: string | null): number {
+      if(token !== null) {
+       const userInfos = this.getUTF8(token);
+       if (userInfos) {
         const identifier = userInfos['id'];
         return identifier;
+       }
       }
       return -1;
     }
 
 
-    getUserEmail(token: string) {
+    getUserEmail(token: string | null) {
+      if(token !== null) {
        const userInfos = this.getUTF8(token);
        if (userInfos) {
          const email = userInfos.sub;
          return email;
        }
+      }
        return '';
     }
 

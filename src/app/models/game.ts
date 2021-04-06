@@ -5,10 +5,10 @@ import { Tour } from "./tour";
 export class Game {
     constructor(
         public id: number,
-        public homeTeam: Team,
-        public awayTeam: Team,
-        public tour: Tour,
-        public statdium: Stadium,
+        public homeTeam: Team | undefined,
+        public awayTeam: Team | undefined,
+        public tour: Tour | undefined,
+        public stadium: Stadium,
         public date?: Date,
         public score?:  string,
     )

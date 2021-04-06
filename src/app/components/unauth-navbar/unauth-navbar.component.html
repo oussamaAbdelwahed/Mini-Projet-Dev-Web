@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Coupe de monde 2022 Qatar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item {{this.activatedLink == '' ? 'active' : ''}}">
+            <a class="nav-link" href="/" (click)="onClickLink($event)">Accueil <span class="sr-only">(current)</span></a>
+          </li>
+        <li class="nav-item {{this.activatedLink == 'login' ? 'active' : ''}}">
+          <a class="nav-link" href="login" (click)="onClickLink($event)">Login <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {{this.activatedLink == 'all-games' ? 'active' : ''}}">
+          <a class="nav-link" href="all-games" (click)="onClickLink($event)">Les matchs à jouer</a>
+        </li>
+        <li class="nav-item {{this.activatedLink == 'buy-ticket' ? 'active' : ''}}">
+          <a class="nav-link" href="buy-ticket" (click)="onClickLink($event)">Acheter un ticket</a>
+        </li>
+        <li class="nav-item {{this.activatedLink == 'signup' ? 'active' : ''}}">
+          <a class="nav-link " href="signup" (click)="onClickLink($event)">Créer un compte</a>
+        </li>
+        <!--    <a class="nav-link disabled" href="signup" (click)="onClickLink($event)">Créer un compte</a>
+        -->
+      </ul>
+    </div>
+  </nav>

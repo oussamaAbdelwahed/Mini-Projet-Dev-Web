@@ -33,7 +33,7 @@ export class TokenStorageService {
     return !this.isLoggedIn();
   }
 
-  public getToken(): String | null {
+  public getToken(): string | null {
     const token =  window.localStorage.getItem(TOKEN_KEY);
     return token;
   }

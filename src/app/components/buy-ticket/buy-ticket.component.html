@@ -1,3 +1,6 @@
+<app-unauth-navbar></app-unauth-navbar>
+<app-modal [textToShow]="modalText" [show]="showModal" [redirectURL]="redirectURL"></app-modal>
+
 <div class="container">
     <br>
         <div class="row">
@@ -17,8 +20,8 @@
           <br>
             <div class="form-group">
               <label for="game">match</label>
-              <select id="game"  formControlName="game" class="form-control">
-                <option *ngFor="let game of games" [value]="game.id" selected>{{game.homeTeam?.teamName}} - {{game.awayTeam?.teamName}}</option>
+              <select id="game"  formControlName="game" class="form-control" (change)="onChooseGame($event.target.value)">
+                <option  *ngFor="let game of games" [value]="game.id" selected>{{game.homeTeam?.teamName}} - {{game.awayTeam?.teamName}}</option>
               </select>      
               <span class="help-block text-danger" *ngIf="buyTicketForm.controls.game.touched && buyTicketForm.controls.game.invalid">choisir le match</span>      
             </div>
@@ -33,12 +36,24 @@
             </div>
 
             <div class="form-group">
-                <label for="ticketType">type de ticket</label>
-                <select id="ticketType"  formControlName="ticketType" class="form-control">
-                  <option value="VIRAGE" selected >VIRAGE (25$)</option>
-                  <option value="PEULOUSE">PEULOUSE (30$)</option>
-                  <option value="ENCEINTE_INF">ENCEINTE INFERIEURE (60$)</option>
-                  <option value="ENCEINTE_SUP">ENCEINTE SUPERIEURE(100$)</option>
+                <label for="ticketType">type de ticket(choisir le match d'abord)</label>
+                <select  id="ticketType"  formControlName="ticketType" class="form-control">
+                 
+                  <ng-container *ngFor="let t of tickets">
+                    <option  *ngIf="t.type=='VIRAGE' && getNbrAvailableTicketsInt(t.game.stadium.virageNCap ,t.nbrBuyedTickets) > 0" [value]="t.type">
+                        {{"VIRAGE (25$) reste "+ getNbrAvailableTickets(t.game.stadium.virageNCap ,t.nbrBuyedTickets)}} 
+                    </option>
+                    <option  *ngIf="t.type=='ENCEINTE_INF' && getNbrAvailableTicketsInt(t.game.stadium.virageEncInfCap ,t.nbrBuyedTickets) > 0">
+                        {{"ENCEINTE INFERIEURE(40$) reste "+ getNbrAvailableTickets(t.game.stadium.virageEncInfCap ,t.nbrBuyedTickets)}}
+                    </option>
+                    <option *ngIf="t.type=='ENCEINTE_SUP' && getNbrAvailableTicketsInt(t.game.stadium.virageEncSupCap ,t.nbrBuyedTickets) > 0">
+                        {{"ENCEINTE SUPERIEUR(50$) reste "+ getNbrAvailableTickets(t.game.stadium.virageEncSupCap ,t.nbrBuyedTickets)}}
+                    </option>
+                    <option *ngIf="t.type=='PELOUSE' && getNbrAvailableTicketsInt(t.game.stadium.viragePelCap ,t.nbrBuyedTickets) > 0">
+                       {{"PELOUSE(30$)reste "+ getNbrAvailableTickets(t.game.stadium.viragePelCap ,t.nbrBuyedTickets)}}
+                    </option>
+                  </ng-container>
+                 <option *ngFor="let o of otherTicketTypes" value="{{o.t}}" >{{o.type}}</option>
                 </select>      
                 <span class="help-block text-danger" *ngIf="buyTicketForm.controls.nbrTickets.touched && buyTicketForm.controls.nbrTickets.invalid">choisir le match</span>      
             </div>
@@ -58,7 +73,7 @@
               </select>
             </div>-->
               <input type="submit" class="login-btn noselect btn btn-primary" value="Acheter" style="width:100%;" [disabled]="buyTicketForm.invalid"/>
-              <!--<p *ngIf="httpErrors" [class]="styleDecision()">{{httpErrors.message}}</p>-->
+             <p *ngIf="showErrorText" class="text-danger">une erreur est survenue , ressayer ! </p>
         </div>
   </form>
         <div class="col-12">

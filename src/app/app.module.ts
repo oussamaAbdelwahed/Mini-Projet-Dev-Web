@@ -13,6 +13,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
 import { ModalComponent } from './ui-extras/modal/modal.component';
+import { UnauthNavbarComponent } from './components/unauth-navbar/unauth-navbar.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ModalComponent } from './ui-extras/modal/modal.component';
     WelcomeComponent,
     SignupComponent,
     BuyTicketComponent,
-    ModalComponent
+    ModalComponent,
+    UnauthNavbarComponent
   ],
   imports: [
     BrowserModule,
