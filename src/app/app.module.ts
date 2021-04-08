@@ -14,8 +14,17 @@ import { SignupComponent } from './components/signup/signup.component';
 import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
 import { ModalComponent } from './ui-extras/modal/modal.component';
 import { UnauthNavbarComponent } from './components/unauth-navbar/unauth-navbar.component';
-
-
+import { ListSpectatorsComponent } from './components/specator/list-spectators/list-spectators.component';
+import { UpdateSpectatorComponent } from './components/specator/update-spectator/update-spectator.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {  MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from "@angular/material/icon";
+import { MatButtonModule } from '@angular/material/button';
+import {MatMenuModule} from "@angular/material/menu";
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +35,27 @@ import { UnauthNavbarComponent } from './components/unauth-navbar/unauth-navbar.
     SignupComponent,
     BuyTicketComponent,
     ModalComponent,
-    UnauthNavbarComponent
+    UnauthNavbarComponent,
+    ListSpectatorsComponent,
+    UpdateSpectatorComponent
+    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule
+
      
 
   ],

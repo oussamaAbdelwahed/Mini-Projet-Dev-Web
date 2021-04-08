@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+//import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
