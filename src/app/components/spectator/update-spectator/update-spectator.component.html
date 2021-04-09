@@ -1,0 +1,72 @@
+<app-modal [textToShow]="modalText" [show]="showModal" [redirectURL]="redirectURL"></app-modal>
+<div class="container">
+    <br>
+        <div class="row">
+            
+        <div class="col-12">
+          <br>
+          <div class="text-center">
+            <img src="assets/img/account.svg" width="100em">
+            <br>
+            <h2>Modifier Coordonneés Spectateur</h2>
+          </div>
+        </div>
+  
+     <form [formGroup]="editSpectForm" class="col-12 mx-auto" (ngSubmit)="onSubmitForm()">
+        <div class="col-7 mx-auto">
+            <span class="text-danger">* Tous les champs sont obligatoires</span><br>
+          <br>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="prenom" #in1 formControlName="firstName" [value]="spectator?.firstname">
+              <span class="help-block text-danger" *ngIf="editSpectForm.controls.firstName.touched && editSpectForm.controls.firstName.invalid">champ obligatoire</span>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="nom" formControlName="lastName" [value]="spectator?.lastname">  
+              <span class="help-block text-danger" *ngIf="editSpectForm.controls.lastName.touched && editSpectForm.controls.lastName.invalid">champ obligatoire</span>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="email" formControlName="email"  [value]="spectator?.email">  
+              <span class="help-block text-danger" *ngIf="editSpectForm.controls.email.touched && editSpectForm.controls.email.invalid">format invalide</span>
+            </div>
+         <!-- <div class="form-group">
+              <input (input)="checkPwd()" type="password" class="form-control" placeholder="mot de passe(8 caractéres au minimum)" formControlName="password">
+              <span class="help-block text-danger" *ngIf="editSpectForm.controls.password.touched && editSpectForm.controls.password.invalid">8 caractéres au minimum</span>
+            </div>
+            <div class="form-group">
+              <input (input)="checkPwd()" type="password" class="form-control" placeholder="confirmer mot de passe" formControlName="checkPassword">
+              <span class="help-block text-danger" *ngIf="(editSpectForm.controls.checkPassword.touched && editSpectForm.controls.checkPassword.invalid) || diffPwd">les deux mot de passes sont differents</span>
+            </div> -->  
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="cin" formControlName="cin"  [value]="spectator?.cin">
+                <span class="help-block text-danger" *ngIf="editSpectForm.controls.cin.touched && editSpectForm.controls.cin.invalid">valeur numérique de 8 chiffres</span>
+            </div>
+            <div class="form-group">
+              <select  formControlName="sex" class="form-control">
+                <option value="MAL" [selected]="spectator?.sex == 'MAL'" >Homme</option>
+                <option value="FEM"  [selected]="spectator?.sex =='FEM'">Femme</option>
+              </select>      
+              <span class="help-block text-danger" *ngIf="editSpectForm.controls.sex.touched && editSpectForm.controls.sex.invalid">choisir votre sex</span>      
+            </div>
+            <div class="form-group">
+                <input type="date" formControlName="birthDate"  placeholder="saisir votre date de naissance"    class="form-control"  [value]="spectator?.dateNaiss | date: 'yyyy-MM-dd'"/>
+                <span class="help-block text-danger" *ngIf="editSpectForm.controls.birthDate.touched && editSpectForm.controls.birthDate.invalid">choisir une date de naissance</span>
+            </div>
+
+              <input type="submit" class="login-btn noselect btn btn-primary" value="Mettre à jour" style="width:100%;" [disabled]="editSpectForm.untouched"/>
+              <p *ngIf="httpErrors" [class]="styleDecision()">{{httpErrors.message}}</p>
+        </div>
+  </form>
+         <div class="col-12">
+           <br>
+         <!--<h6 class="text-center"><a routerLink="/Login">Si Vous Avez Un Compte, Cliquez Ici</a></h6>  -->
+        </div>
+        
+           
+          
+           
+        
+        
+        </div>
+    </div>
+   
+  

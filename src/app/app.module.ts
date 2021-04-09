@@ -14,8 +14,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
 import { ModalComponent } from './ui-extras/modal/modal.component';
 import { UnauthNavbarComponent } from './components/unauth-navbar/unauth-navbar.component';
-import { ListSpectatorsComponent } from './components/specator/list-spectators/list-spectators.component';
-import { UpdateSpectatorComponent } from './components/specator/update-spectator/update-spectator.component';
+import { ListSpectatorsComponent } from './components/spectator/list-spectators/list-spectators.component';
+import { UpdateSpectatorComponent } from './components/spectator/update-spectator/update-spectator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -25,6 +25,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
 import {MatMenuModule} from "@angular/material/menu";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { ShowSpectatorComponent } from './components/spectator/show-spectator/show-spectator.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,9 @@ import {MatMenuModule} from "@angular/material/menu";
     ModalComponent,
     UnauthNavbarComponent,
     ListSpectatorsComponent,
-    UpdateSpectatorComponent
+    UpdateSpectatorComponent,
+    ShowSpectatorComponent,
+    
     
 
   ],
@@ -54,7 +58,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
 
      
 

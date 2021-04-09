@@ -1,11 +1,27 @@
+<div class="container">
 <h1>Liste de spectateurs</h1>
 <mat-form-field>
     <mat-label>Recherche</mat-label>
-    <input matInput  placeholder="chercher un spectateur" (keyup)="applyFilter($event)"/>
+    <input matInput #input  placeholder="chercher un spectateur"/>
 </mat-form-field>
 
+
+
+
+
 <div>
-    <mat-table mat-table [dataSource]="dataSource" matSort>
+    <div style="margin-bottom:30px;" class="col-lg-4 col-md-4 col-sm-12 col-xm-12">
+        <label for="game">Matchs</label>
+        <select id="game" class="form-control" (change)="onChooseGame($event)">
+            <option value="" selected>tous les matchs</option>
+            <option *ngFor="let g of games" [value]="g.id">{{g.homeTeam?.teamName}} -{{g.awayTeam?.teamName}} </option>
+        </select>
+    </div>
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-table class="lessons-table mat-elevation-z8"   mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="firstname">
             <mat-header-cell *matHeaderCellDef>firstname</mat-header-cell>
             <mat-cell *matCellDef="let row" >{{row.firstname}}</mat-cell>
@@ -17,40 +33,44 @@
         </ng-container>
 
         <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>email</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef >email</mat-header-cell>
             <mat-cell *matCellDef="let row" >{{row.email}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="cin">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> cin</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef > cin</mat-header-cell>
             <mat-cell *matCellDef="let row" >{{row.cin}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="dateNaiss">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>date de naissance</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef >date de naissance</mat-header-cell>
             <mat-cell *matCellDef="let row" >{{row.dateNaiss | date: 'MM/dd/yyyy'}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="sex">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>sex</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef >sex</mat-header-cell>
             <mat-cell *matCellDef="let row" >{{row.sex}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef >Actions</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                   <mat-menu #menu="matMenu">
-                   <button mat-menu-item (click)="c1(row.id)">
+                   <button mat-menu-item [routerLink]="['/spectator' ,row.id,'edit']">
                        <mat-icon>edit</mat-icon>
                        <span>Modifier</span>
                     </button>
-                   <button mat-menu-item (click)="c2(row.id)">
+                   <button mat-menu-item (click)="onDelete(row.id)">
                       <mat-icon>delete</mat-icon>
                       <span>Supprimer</span>
                    </button>
+                   <button mat-menu-item [routerLink]="['/spectator' ,row.id,'show']">
+                    <mat-icon>info</mat-icon>
+                    <span>Afficher plus</span>
+                 </button>
                   </mat-menu>
             </mat-cell>
         </ng-container>
@@ -58,12 +78,15 @@
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columns"></mat-row>
     </mat-table>
-    <mat-paginator 
+   <!-- <mat-paginator 
          [length]="10"
          [pageSize]="2"
          [pageSizeOptions]="[1,2]"
-    >
+    ></mat-paginator>-->
+    <mat-paginator [length]="dataSource?.max" [pageSize]="pageSize"
+    [pageSizeOptions]="[1,2,3, 5, 10]"></mat-paginator>
  <!--[length]="spectators?.length"   ===> will be with count(*) of spectators from backend & database-->
-    </mat-paginator>
+    
 </div>
 <!--"firstname","lastname","email","cin","date de naissance","sex"-->
+</div>

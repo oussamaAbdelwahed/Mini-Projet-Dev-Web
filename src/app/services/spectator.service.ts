@@ -1,7 +1,7 @@
 import { Spectator } from './../models/spectator';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AppGlobals } from '../globals/app-globals';
 
 @Injectable({
@@ -16,14 +16,37 @@ export class SpectatorService {
     private globals: AppGlobals
     ) {}
 
-  public getSpectatorsPage(pageIndex: number) {
-    this.httpClient.get<Spectator[]>(this.globals.ApiBaseUrl+ "/spectator/all/"+pageIndex).subscribe(
-      (data: Spectator[]) => {
-        this.emitSpectatorSubject(data);  
-      },(error) => {
-        this.emitSpectatorSubject(error);
+  public getSpectatorsPage(pageIndex: number,pageSize=2,gameId="",searchQuery="") : Observable<Spectator[]> {
+    return  this.httpClient.get<Spectator[]>(this.globals.ApiBaseUrl+ "/spectator/all/"+pageIndex,
+      {
+          params: new HttpParams()
+          .set('gameId', gameId.toString())
+          .set('pageSize', pageSize.toString())
+          .set("searchQuery",searchQuery)
       }
+    );
+  }
+
+  public getSpectatorById(id:number){
+      this.httpClient.get<Spectator>(this.globals.ApiBaseUrl+"/spectator/"+id.toString()+"/get").subscribe(
+        (data: Spectator)=>{
+          this.emitSpectatorSubject(data);
+      },(error)=>{
+        this.emitSpectatorSubject(error);
+      });
+  }
+
+  public updateSpectator(s:Spectator) {
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(this.globals.ApiBaseUrl+"/spectator/"+s.id+"/update",s).subscribe(
+        (data)=>{
+           resolve(data);
+        },(error)=>{
+           reject(error);
+        }
      )
+    });
+ 
   }
 
 

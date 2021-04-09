@@ -14,14 +14,24 @@ export class GameService {
   public getCurrentTourGames() {
       this.httpClient.get<Game[]>(this.globals.ApiBaseUrl+"/game/current-tour-games").subscribe(
         (data: Game[])=>{
-           this.emitAuthSubject(data)
+           this.emitGamesSubject(data)
         },(error)=> {
-           this.emitAuthSubject(error)
+           this.emitGamesSubject(error)
         }
       )
   }
 
-  private emitAuthSubject(data: any) {
+  public getAllGames() {
+    this.httpClient.get<Game[]>(this.globals.ApiBaseUrl+"/game/all").subscribe(
+      (data: Game[])=>{
+         this.emitGamesSubject(data)
+      },(error)=> {
+         this.emitGamesSubject(error)
+      }
+    )
+  }
+
+  private emitGamesSubject(data: any) {
     this.gamesSubject.next(data);
   }
 }
