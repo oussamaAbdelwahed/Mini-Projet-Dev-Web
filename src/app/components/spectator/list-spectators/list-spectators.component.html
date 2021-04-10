@@ -1,3 +1,12 @@
+<app-modal 
+      [textToShow]="textToShow"
+      [show]="showModal"
+      [redirectURL]="redirectURL"
+      [isForDelete]="isForDelete"
+      (confirmedDeletion)="onDeletionConfirmed($event)"
+>
+</app-modal>
+
 <div class="container">
 <h1>Liste de spectateurs</h1>
 <mat-form-field>
@@ -5,16 +14,14 @@
     <input matInput #input  placeholder="chercher un spectateur"/>
 </mat-form-field>
 
-
-
-
-
 <div>
     <div style="margin-bottom:30px;" class="col-lg-4 col-md-4 col-sm-12 col-xm-12">
         <label for="game">Matchs</label>
         <select id="game" class="form-control" (change)="onChooseGame($event)">
             <option value="" selected>tous les matchs</option>
-            <option *ngFor="let g of games" [value]="g.id">{{g.homeTeam?.teamName}} -{{g.awayTeam?.teamName}} </option>
+            <ng-container *ngFor="let g of games">
+               <option  *ngIf="g?.score?.length != 0" [value]="g.id">{{g.homeTeam?.teamName}} -{{g.awayTeam?.teamName}} </option>
+            </ng-container>
         </select>
     </div>
     <div class="spinner-container" *ngIf="dataSource.loading$ | async">
@@ -78,15 +85,9 @@
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columns"></mat-row>
     </mat-table>
-   <!-- <mat-paginator 
-         [length]="10"
-         [pageSize]="2"
-         [pageSizeOptions]="[1,2]"
-    ></mat-paginator>-->
+
     <mat-paginator [length]="dataSource?.max" [pageSize]="pageSize"
-    [pageSizeOptions]="[1,2,3, 5, 10]"></mat-paginator>
- <!--[length]="spectators?.length"   ===> will be with count(*) of spectators from backend & database-->
-    
+    [pageSizeOptions]="[1,2,3, 5, 10]"></mat-paginator>    
 </div>
-<!--"firstname","lastname","email","cin","date de naissance","sex"-->
+
 </div>

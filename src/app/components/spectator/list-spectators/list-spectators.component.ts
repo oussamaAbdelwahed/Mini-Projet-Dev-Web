@@ -4,7 +4,6 @@ import { SpectatorDataSource } from '../../../custom/spectator-data-source';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SpectatorService } from 'src/app/services/spectator.service';
 import { Spectator } from 'src/app/models/spectator';
-import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
@@ -26,11 +25,18 @@ export class ListSpectatorsComponent implements OnInit,AfterViewInit {
 
   public games: Game[]= [];
 
-
-  //@ViewChild(MatSort,{static:true}) sort: MatSort | null = null;
   @ViewChild(MatPaginator,{static:true}) paginator!: MatPaginator ;
   @ViewChild('input') input!: ElementRef;
 
+
+  //modal data
+  public textToShow: string="";
+  public showModal: boolean=false;
+  public redirectURL: string="";
+  public isForDelete: boolean =true;
+
+
+  private spectatorId!: number;
  
   constructor(
            public spectatorService: SpectatorService,
@@ -42,7 +48,6 @@ export class ListSpectatorsComponent implements OnInit,AfterViewInit {
    this.dataSource.loadSpectators(this.paginator!.pageIndex,this.paginator!.pageSize,this.gameId,this.filterValue,true);
 
   }
-
 
   ngOnInit(): void {
     this.gameService.gamesSubject.subscribe((data:Game[])=>{
@@ -85,23 +90,35 @@ export class ListSpectatorsComponent implements OnInit,AfterViewInit {
   
      this.paginator.pageIndex = 0;
      this.dataSource.loadSpectators(this.paginator!.pageIndex,this.paginator!.pageSize,this.gameId,this.filterValue,true);
-     //this.loadLessonsPage();
-     //here must seek to to first page and show filtering results
-     //this.dataSource.filter = 
   }
 
-
-  public onEdit(spectatorId:number) {
-    const spect  = this.spectators.find(spec => spec!.id == spectatorId);
-    this.router.navigate(["spectator/edit",spectatorId], { state: { spectator: spect} });
-   
+  public onDeletionConfirmed(confirmation:boolean) {
+      if(confirmation) {
+        this.spectatorService.deleteSpectator(this.spectatorId).then((data)=>{
+          if(data) {
+            this.textToShow="spectateur supprimé avec success";
+            setTimeout(()=>{
+             this.showModal = false;
+            },3000);
+          }
+      },(error)=>{
+        console.log("ERROR FROM COMPONENT"+error);
+        this.textToShow="une erreur est survenue, veuillez ressayer";
+       });
+     }else{
+      this.textToShow = "";
+      this.showModal = false;
+     }
   }
 
   public onDelete(spectatorId:number) {
-    console.log(spectatorId);
+       console.log("delete");
+       this.textToShow = "voulez-vous vraiment supprimer le spectateur avec l 'id  "+spectatorId;
+       this.showModal = true;
+       this.spectatorId = spectatorId
   }
 
-  public onMoreInfo(spectatorId:number) {
+  public onMoreInfo(spectatorId:number) {  
      //besoin de cette methode pour passer l obj spectator en snaphsot.data
     console.log(spectatorId)
   }

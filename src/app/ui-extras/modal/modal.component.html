@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Avertissement</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button  type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -11,7 +11,8 @@
              <p>{{textToShow}}</p>
         </div>
         <div class="modal-footer">
-          <button (click)="onModalOkClicked()" type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <!--<button (click)="onModalOkClicked()" type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>-->
+          <button  (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
           <button (click)="onModalOkClicked()"  type="button" class="btn btn-primary">Ok</button>
         </div>
       </div>
