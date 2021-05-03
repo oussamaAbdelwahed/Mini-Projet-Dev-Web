@@ -1,0 +1,229 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Spectators</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Spectators
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Lastname</th>
+                      <th>Firstname</th>
+                      <th>Gender</th>
+                      <th>Date of birth</th>
+                      <th>CIN</th>
+                      <th>email</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let spectator of spectators">
+                      <td>{{spectator.lastname}}</td>
+                      <td>{{spectator.firstname}}</td>
+                      <td *ngIf="spectator.sex === 'MAL'">Male</td>
+                      <td *ngIf="spectator.sex === 'FEM'">Female</td>
+                      <td>{{spectator.dateNaiss | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{spectator.cin}}</td>
+                      <td>{{spectator.email}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(spectator,'edit')">Edit</a>
+                              <a class="dropdown-item"(click)="onOpenModal(spectator,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+ <!-- Add Spectator Modal -->
+ <div class="modal fade" id="addSpectatorModal" tabindex="-1" role="dialog" aria-labelledby="addSpectatorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addSpectatorModalLabel">Add Spectator</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddSpectator(addForm)">
+            <div class="form-group">
+               <label for="name">First name : </label>
+               <input type="text" ngModel name="firstname" class="form-control" id="firstname" placeholder="First name" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Last name : </label>
+              <input type="text" ngModel name="lastname" class="form-control" id="lastname" placeholder="Last name" required>
+           </div>
+           <div class="form-group">
+            <label for="name">Gender : </label>
+            <div class="form-check">
+              <input class="form-check-input" ngModel name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+              <label class="form-check-label" for="exampleRadios1">
+               Male
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" ngModel name="sex" type="radio" id="exampleRadios2" value="FEM">
+              <label class="form-check-label" for="exampleRadios2">
+                Female
+              </label>
+            </div>
+         </div>
+         <div class="form-group">
+          <label for="name">CIN : </label>
+          <input type="number" ngModel name="cin" class="form-control" id="cin" placeholder="CIN" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Date of Birth : </label>
+          <input type="date" ngModel name="dateNaiss" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Email : </label>
+          <input type="email" ngModel name="email" id="email" class="form-control" placeholder="Enter Email" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Password : </label>
+          <input type="password" ngModel name="password" id="password" class="form-control" placeholder="Enter Password of 6 characters" minlength="6" required>
+        </div>
+        
+            <div class="modal-footer">
+               <button type="button" id="add-spectator-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="deleteSpectatorModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="deleteModelLabel">Delete Spectator {{deleteSpectator?.firstname}} {{deleteSpectator?.lastname}}</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+              </div>
+              <div class="modal-body">
+                 <p>Are you sure you want to delete Spectator {{deleteSpectator?.firstname}} {{deleteSpectator?.lastname}}?</p>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button (click)="onDeleteSpectator(deleteSpectator?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="updateSpectatorModal" tabindex="-1" role="dialog" aria-labelledby="spectatorEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="updateSpectatorModalLabel">Edit Spectator : {{editSpectator?.firstname}} {{editSpectator?.lastname}}</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+              </div>
+              <div class="modal-body">
+                 <form #editForm = "ngForm">
+                  <input type="hidden" ngModel="{{editSpectator?.id}}" name="id" class="form-control" id="id">
+                  <div class="form-group">
+                    <label for="name">First name : </label>
+                    <input type="text" ngModel={{editSpectator?.firstname}} name="firstname" class="form-control" id="firstname" placeholder="First name">
+                 </div>
+                 <div class="form-group">
+                  <label for="name">Last name : </label>
+                  <input type="text" ngModel="{{editSpectator?.lastname}}" name="lastname" class="form-control" id="lastname" placeholder="Last name" >
+                </div>
+                <div class="form-group">
+                  <label for="name">Gender : </label>
+                  <div class="form-check">
+                    <input class="form-check-input" ngModel="{{editSpectator?.sex}}" name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                     Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" ngModel="{{editSpectator?.sex}}" name="sex" type="radio" id="exampleRadios2" value="FEM">
+                    <label class="form-check-label" for="exampleRadios2">
+                      Female
+                    </label>
+                  </div>
+               </div>
+               <div class="form-group">
+                <label for="name">CIN : </label>
+                <input type="number" ngModel="{{editSpectator?.cin}}" name="cin" class="form-control" id="cin" placeholder="CIN">
+              </div>
+              <div class="form-group">
+                <label for="name">Date of Birth : </label>
+                <input type="date" [ngModel]="editSpectator?.dateNaiss" name="dateNaiss" value="{{editSpectator?.dateNaiss}}" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31">
+              </div>
+              <div class="form-group">
+                <label for="name">Email : </label>
+                <input type="email" ngModel={{editSpectator?.email}} name="email" id="email" class="form-control" placeholder="Enter Email">
+              </div>
+              <div class="form-group">
+                <label for="name">Password : </label>
+                <input type="password" ngModel={{editSpectator?.password}} name="password" id="password" class="form-control" placeholder="Enter Password" minlength="6">
+                
+              </div>
+                  <div class="modal-footer">
+                      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                      <button (click)="onUpdateSpectator(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                  </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+      </div>
+   

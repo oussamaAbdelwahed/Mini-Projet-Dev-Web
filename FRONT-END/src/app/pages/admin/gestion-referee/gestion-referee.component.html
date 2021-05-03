@@ -1,0 +1,221 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Referee</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Referees
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Lastname</th>
+                      <th>Firstname</th>
+                      <th>Gender</th>
+                      <th>Date of birth</th>
+                      <th>Referee Type</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let referee of referees">
+                      <td>{{referee.lastname}}</td>
+                      <td>{{referee.firstname}}</td>
+                      <td *ngIf="referee.sex === 'MAL'">Male</td>
+                      <td *ngIf="referee.sex === 'FEM'">Female</td>
+                      <td>{{referee.dateNaiss | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{referee.typeReferee}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(referee,'edit')">Edit</a>
+                              <a class="dropdown-item"(click)="onOpenModal(referee,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <!-- Add Team Modal -->
+<div class="modal fade" id="addRefereeModal" tabindex="-1" role="dialog" aria-labelledby="addRefereeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addRefereeModalLabel">Add Referee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddReferee(addForm)">
+          <div class="form-group">
+             <label for="name">First name : </label>
+             <input type="text" ngModel name="firstname" class="form-control" id="firstname" placeholder="First name" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Last name : </label>
+            <input type="text" ngModel name="lastname" class="form-control" id="lastname" placeholder="Last name" required>
+         </div>
+         <div class="form-group">
+          <label for="name">Gender : </label>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+            <label class="form-check-label" for="exampleRadios1">
+             Male
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex" type="radio" id="exampleRadios2" value="FEM">
+            <label class="form-check-label" for="exampleRadios2">
+              Female
+            </label>
+          </div>
+       </div>
+       <div class="form-group">
+        <label for="name">CIN : </label>
+        <input type="number" ngModel name="cin" class="form-control" id="cin" placeholder="CIN" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Date of Birth : </label>
+        <input type="date" ngModel name="dateNaiss" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31" required>
+      </div>
+      <div class="form-group">
+        <label>Type : </label>
+        <select ngModel name="typeReferee" class="custom-select">
+          <option *ngFor="let TypeRefereee of TypeReferees" id="{{TypeRefereee}}" value="{{TypeRefereee}}">{{TypeRefereee}}</option>
+        </select>
+      </div>
+          <div class="modal-footer">
+             <button type="button" id="add-referee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+  <div class="modal fade" id="updateRefereeModal" tabindex="-1" role="dialog" aria-labelledby="RefereeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateRefereeModalLabel">Edit Referee : {{editReferee?.firstname}} {{editReferee?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editReferee?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">First name : </label>
+                <input type="text" ngModel={{editReferee?.firstname}} name="firstname" class="form-control" id="firstname" placeholder="First name">
+             </div>
+             <div class="form-group">
+              <label for="name">Last name : </label>
+              <input type="text" ngModel="{{editReferee?.lastname}}" name="lastname" class="form-control" id="lastname" placeholder="Last name" >
+            </div>
+            <div class="form-group">
+              <label for="name">Gender : </label>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editReferee?.sex}}" name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                 Male
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editReferee?.sex}}" name="sex" type="radio" id="exampleRadios2" value="FEM">
+                <label class="form-check-label" for="exampleRadios2">
+                  Female
+                </label>
+              </div>
+           </div>
+           <div class="form-group">
+            <label for="name">CIN : </label>
+            <input type="number" ngModel="{{editReferee?.cin}}" name="cin" class="form-control" id="cin" placeholder="CIN">
+          </div>
+          <div class="form-group">
+            <label for="name">Date of Birth : </label>
+            <input type="date" [ngModel]="editReferee?.dateNaiss" name="dateNaiss" value="{{editReferee?.dateNaiss}}" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31">
+          </div>
+          <div class="form-group">
+            <label>Type : </label>
+            <select ngModel="{{editReferee?.typeReferee}}" name="typeReferee" class="custom-select">
+              <option *ngFor="let TypeRefereee of TypeReferees" id="{{TypeRefereee}}" value="{{TypeRefereee}}">{{TypeRefereee}}</option>
+            </select>
+          </div>
+          
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateReferee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteRefereeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Referee {{deleteReferee?.firstname}} {{deleteReferee?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Referee {{deleteReferee?.firstname}} {{deleteReferee?.lastname}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteReferee(deleteReferee?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+

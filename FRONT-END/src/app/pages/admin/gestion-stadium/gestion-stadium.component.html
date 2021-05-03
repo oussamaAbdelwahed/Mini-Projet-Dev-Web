@@ -1,0 +1,196 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Stadiums</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Stadiums
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table #dataTable class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Stadium Name</th>
+                      <th>Virage Nord capacity</th>
+                      <th>Virage Sud capacity</th>
+                      <th>Peulouse capacity</th>
+                      <th>Enceinte Inf cap</th>
+                      <th>Enceinte Sup cap</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let stadium of stadiums">
+                      <td>{{stadium.stadiumName}}</td>
+                      <td>{{stadium.virageNCap}}</td>
+                      <td>{{stadium.virageSCap}}</td>
+                      <td>{{stadium.viragePelCap}}</td>
+                      <td>{{stadium.virageEncInfCap}}</td>
+                      <td>{{stadium.virageEncSupCap}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(stadium,'edit')">Edit</a>
+                              <a class="dropdown-item"(click)="onOpenModal(stadium,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <!-- Add Stadium Modal -->
+<div class="modal fade" id="addStadiumModal" tabindex="-1" role="dialog" aria-labelledby="addStadiumModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addStadiumModalLabel">Add Stadium</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddStadium(addForm)">
+          <div class="form-group">
+             <label for="name">Stadium Name : </label>
+             <input type="text" ngModel name="stadiumName" class="form-control" id="stadiumName" placeholder="Stadium Name" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Virage Nord capacity : </label>
+            <input type="number" ngModel name="virageNCap" class="form-control" id="virageNCap" placeholder="Virage Nord capacity" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Virage Sud capacity : </label>
+            <input type="number" ngModel name="virageSCap" class="form-control" id="virageSCap" placeholder="Virage Sud capacity" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Peulouse capacity : </label>
+            <input type="number" ngModel name="viragePelCap" class="form-control" id="viragePelCap" placeholder="Peulouse capacity" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Enceinte Inf cap : </label>
+            <input type="number" ngModel name="virageEncInfCap" class="form-control" id="virageEncInfCap" placeholder="Enceinte Inferior cap" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Enceinte Sup cap : </label>
+            <input type="number" ngModel name="virageEncSupCap" class="form-control" id="virageEncSupCap" placeholder="Enceinte Superior cap" required>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-stadium-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="updateStadiumModal" tabindex="-1" role="dialog" aria-labelledby="StadiumEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateStadiumModalLabel">Edit Stadium: {{editStadium?.stadiumName}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editStadium?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">Stadium Name : </label>
+                <input type="text" ngModel={{editStadium?.stadiumName}} name="stadiumName" class="form-control" id="stadiumName" placeholder="First name">
+             </div>
+             <div class="form-group">
+                <label for="name">Virage Nord capacity : </label>
+                <input type="number" ngModel="{{editStadium?.virageNCap}}" name="virageNCap" class="form-control" id="virageNCap" placeholder="Virage Nord capacity">
+              </div>
+              <div class="form-group">
+                <label for="name">Virage Sud capacity : </label>
+                <input type="number" ngModel="{{editStadium?.virageSCap}}" name="virageSCap" class="form-control" id="virageSCap" placeholder="Virage Sud capacity">
+              </div>
+              <div class="form-group">
+                <label for="name">Peulouse capacity : </label>
+                <input type="number" ngModel="{{editStadium?.viragePelCap}}" name="viragePelCap" class="form-control" id="viragePelCap" placeholder="Peulouse capacity">
+              </div>
+              <div class="form-group">
+                <label for="name">Enceinte Inf cap : </label>
+                <input type="number" ngModel="{{editStadium?.virageEncInfCap}}" name="virageEncInfCap" class="form-control" id="virageEncInfCap" placeholder="Enceinte Inferior cap">
+              </div>
+              <div class="form-group">
+                <label for="name">Enceinte Sup cap : </label>
+                <input type="number" ngModel="{{editStadium?.virageEncSupCap}}" name="virageEncSupCap" class="form-control" id="virageEncSupCap" placeholder="Enceinte Superior cap">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateStadium(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteStadiumModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Stadium: {{deleteStadium?.stadiumName}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Staduim {{deleteStadium?.stadiumName}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteStadium(deleteStadium?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+

@@ -1,0 +1,257 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Staff Members</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Staff Members
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Lastname</th>
+                      <th>Firstname</th>
+                      <th>Gender</th>
+                      <th>Date of birth</th>
+                      <th>Role</th>
+                      <th>Team</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let staff of staffs">
+                      <td>{{staff.lastname}}</td>
+                      <td>{{staff.firstname}}</td>
+                      <td *ngIf="staff.sex === 'MAL'">Male</td>
+                      <td *ngIf="staff.sex === 'FEM'">Female</td>
+                      <td>{{staff.dateNaiss | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{staff.roleStaff}}</td>
+                      <td>{{staff.teamOfStaff.teamName}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(staff,'edit')">Edit</a>
+                              <a class="dropdown-item" (click)="onOpenModal(staff,'editTeam')">Edit Team</a>
+                              <a class="dropdown-item"(click)="onOpenModal(staff,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <!-- Add Team Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addStaffModalLabel">Add staff member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddStaff(addForm)">
+          <div class="form-group">
+             <label for="name">First name : </label>
+             <input type="text" ngModel name="firstname" class="form-control" id="firstname" placeholder="First name" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Last name : </label>
+            <input type="text" ngModel name="lastname" class="form-control" id="lastname" placeholder="Last name" required>
+         </div>
+         <div class="form-group">
+          <label for="name">Gender : </label>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+            <label class="form-check-label" for="exampleRadios1">
+             Male
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex" type="radio" id="exampleRadios2" value="FEM">
+            <label class="form-check-label" for="exampleRadios2">
+              Female
+            </label>
+          </div>
+       </div>
+       <div class="form-group">
+        <label for="name">CIN : </label>
+        <input type="number" ngModel name="cin" class="form-control" id="cin" placeholder="CIN" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Date of Birth : </label>
+        <input type="date" ngModel name="dateNaiss" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31" required>
+      </div>
+      <div class="form-group">
+        <label>Role : </label>
+        <select ngModel name="roleStaff" class="custom-select">
+          <option *ngFor="let roleStafff of roleStaffs" id="{{roleStafff}}" value="{{roleStafff}}">{{roleStafff}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Team : </label>
+        <select class="custom-select" ngModel name="teamOfStaff">
+          <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+        </select>
+      </div>
+          <div class="modal-footer">
+             <button type="button" id="add-staff-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="updateStaffModal" tabindex="-1" role="dialog" aria-labelledby="staffEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateStaffModalLabel">Edit Staff member : {{editStaff?.firstname}} {{editStaff?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editStaff?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">First name : </label>
+                <input type="text" ngModel={{editStaff?.firstname}} name="firstname" class="form-control" id="firstname" placeholder="First name">
+             </div>
+             <div class="form-group">
+              <label for="name">Last name : </label>
+              <input type="text" ngModel="{{editStaff?.lastname}}" name="lastname" class="form-control" id="lastname" placeholder="Last name" >
+            </div>
+            <div class="form-group">
+              <label for="name">Gender : </label>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editStaff?.sex}}" name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                 Male
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editStaff?.sex}}" name="sex" type="radio" id="exampleRadios2" value="FEM">
+                <label class="form-check-label" for="exampleRadios2">
+                  Female
+                </label>
+              </div>
+           </div>
+           <div class="form-group">
+            <label for="name">CIN : </label>
+            <input type="number" ngModel="{{editStaff?.cin}}" name="cin" class="form-control" id="cin" placeholder="CIN">
+          </div>
+          <div class="form-group">
+            <label for="name">Date of Birth : </label>
+            <input type="date" [ngModel]="editStaff?.dateNaiss" name="dateNaiss" value="{{editStaff?.dateNaiss}}" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31">
+          </div>
+          <div class="form-group">
+            <label>Role : </label>
+            <select ngModel="{{editStaff?.roleStaff}}" name="roleStaff" class="custom-select">
+              <option *ngFor="let roleStafff of roleStaffs" id="{{roleStafff}}" value="{{roleStafff}}">{{roleStafff}}</option>
+            </select>
+          </div>
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateStaff(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteStaffModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete staff member {{deleteStaff?.firstname}} {{deleteStaff?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Player {{deleteStaff?.firstname}} {{deleteStaff?.lastname}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteStaff(deleteStaff?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateStaffTeamModal" tabindex="-1" role="dialog" aria-labelledby="staffEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateStaffModalLabel">Edit Staff member : {{editStaff?.firstname}} {{editStaff?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm2 = "ngForm">
+              <input type="hidden" ngModel="{{editStaff?.id}}" name="id" class="form-control" id="id">
+          <div class="form-group" required>
+            <label>Team  : </label>
+            <select ngModel="{{editStaff?.teamOfStaff}}" name="teamOfStaff" class="custom-select">
+              <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+            </select>
+          </div>
+          
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateStaffTeam(editForm2.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>

@@ -1,0 +1,199 @@
+<app-unauth-navbar></app-unauth-navbar>
+
+<div class="container" ng-app="formvalid">
+  <!--tour 4 panel-->  
+  <div *ngIf="groupedGames.tour4.nonPlayedGames.length > 0 || groupedGames.tour4.playedGames.length > 0" class="panel" data-ng-controller="validationCtrl" style="margin-top: 100px;">
+
+    <div class="panel-body">
+        <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+        <thead>
+          <tr>
+            <th>Final</th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngIf="groupedGames.tour4.nonPlayedGames.length > 0">Matchs planifiés</tr>
+            <tr *ngFor="let g of groupedGames.tour4.nonPlayedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">-</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                 </div>
+              </td>
+            </tr>
+            <tr *ngIf="groupedGames.tour4.playedGames.length > 0">Matchs joués</tr>
+            <tr *ngFor="let g of groupedGames.tour4.playedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">{{g.score}}</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                </div>
+              </td>
+            </tr>            
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <!--tour 3 panel-->  
+  <div *ngIf="groupedGames.tour3.nonPlayedGames.length > 0 || groupedGames.tour3.playedGames.length > 0" class="panel" data-ng-controller="validationCtrl" style="margin-top: 100px;">
+
+    <div class="panel-body">
+        <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+        <thead>
+          <tr>
+            <th>Demi final</th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngIf="groupedGames.tour3.nonPlayedGames.length > 0">Matchs planifiés</tr>
+            <tr *ngFor="let g of groupedGames.tour3.nonPlayedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">-</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                 </div>
+              </td>
+            </tr>
+            <tr *ngIf="groupedGames.tour3.playedGames.length > 0">Matchs joués</tr>
+            <tr *ngFor="let g of groupedGames.tour3.playedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">{{g.score}}</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                </div>
+              </td>
+            </tr>            
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!--tour 2 panel-->  
+  <div *ngIf="groupedGames.tour2.nonPlayedGames.length > 0 || groupedGames.tour2.playedGames.length > 0" class="panel" data-ng-controller="validationCtrl" style="margin-top: 100px;">
+
+    <div class="panel-body">
+        <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+        <thead>
+          <tr>
+            <th>Quatriéme de final</th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngIf="groupedGames.tour2.nonPlayedGames.length > 0">Matchs planifiés</tr>
+            <tr *ngFor="let g of groupedGames.tour2.nonPlayedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">-</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                 </div>
+              </td>
+            </tr>
+            <tr *ngIf="groupedGames.tour2.playedGames.length > 0">Matchs joués</tr>
+            <tr *ngFor="let g of groupedGames.tour2.playedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">{{g.score}}</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                </div>
+              </td>
+            </tr>            
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!--tour 1 panel-->  
+  <div *ngIf="groupedGames.tour1.nonPlayedGames.length > 0 || groupedGames.tour1.playedGames.length > 0" class="panel" data-ng-controller="validationCtrl" style="margin-top: 100px;">
+
+    <div class="panel-body">
+        <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+        <thead>
+          <tr>
+            <th>Huitiéme de final</th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngIf="groupedGames.tour1.nonPlayedGames.length > 0">Matchs planifiés</tr>
+            <tr *ngFor="let g of groupedGames.tour1.nonPlayedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">-</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                 </div>
+              </td>
+            </tr>
+            <tr *ngIf="groupedGames.tour1.playedGames.length > 0">Matchs joués</tr>
+            <tr *ngFor="let g of groupedGames.tour1.playedGames; let i=index">
+              <td>
+                 <div class="d-flex flex-row bd-highlight justify-content-center mb-3">
+                  <div class="p-2 bd-highlight">
+                    {{g.homeTeam.teamName}}
+                    <img class="teamPhoto1" [src]="'https://flagcdn.com/'+g.homeTeam.photo+'.svg'" width="20" height="12"/>
+                  </div>
+                  <div class="p-2 bd-highlight">{{g.score}}</div>
+                  <div class="p-2 bd-highlight">
+                    <img class="teamPhoto2" [src]="'https://flagcdn.com/'+g.awayTeam.photo+'.svg'" width="20" height="12"/>
+                    {{g.awayTeam.teamName}}
+                  </div>
+                </div>
+              </td>
+            </tr>            
+          </tbody>
+      </table>
+    </div>
+  </div>
+  </div>

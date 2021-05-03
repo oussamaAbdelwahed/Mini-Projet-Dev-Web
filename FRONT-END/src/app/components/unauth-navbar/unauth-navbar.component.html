@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8d1b3d;">
+    <a class="navbar-brand" href="#" style="color:white">Coupe de monde 2022 Qatar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item {{this.activatedLink == '' ? 'active' : ''}}" >
+            <a [ngStyle]="{'color': this.activatedLink == '' ? 'white' : '#bdc3c7'}" class="nav-link" routerLink="/">Accueil <span class="sr-only">(current)</span></a>
+          </li>
+        <li class="nav-item {{this.activatedLink == 'login' ? 'active' : ''}}">
+          <a  [ngStyle]="{'color': this.activatedLink == 'login' ? 'white' : '#bdc3c7'}" class="nav-link" routerLink="/login">Login <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {{this.activatedLink == 'games' ? 'active' : ''}}">
+          <a  [ngStyle]="{'color': this.activatedLink == 'games' ? 'white' : '#bdc3c7'}"  class="nav-link" routerLink="/games">Tous matchs</a>
+        </li>
+        <li class="nav-item {{this.activatedLink == '/spectator-dashboard/buy-ticket' ? 'active' : ''}}">
+          <a  [ngStyle]="{'color': this.activatedLink == '/spectator-dashboard/buy-ticket' ? 'white' : '#bdc3c7'}"  class="nav-link"  (click)="onClickLink($event)">Acheter un ticket</a>
+          <!--<a class="nav-link" routerLink="/spectator-dashboard/buy-ticket">Acheter un ticket</a>-->
+        </li>
+        <li class="nav-item {{this.activatedLink == 'signup' ? 'active' : ''}}">
+          <a [ngStyle]="{'color': this.activatedLink == 'signup' ? 'white' : '#bdc3c7'}" class="nav-link " routerLink="/signup">Créer un compte</a>
+        </li>
+        <!--    <a class="nav-link disabled" href="signup" (click)="onClickLink($event)">Créer un compte</a>
+        -->
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,160 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Tours</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Tours
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Tour ID</th>
+                      <th>Tour description </th>
+                      <th>Nombre of Teams participating</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tour of tours">
+                      <td>{{tour.id}}</td>
+                      <td>{{tour.designation}}</td>
+                      <td>{{tour.numberTeamMax}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                                <a class="dropdown-item" [routerLink]="['/admin/games_management', tour.id]">Consult {{tour.designation}}</a>
+                              <a class="dropdown-item" (click)="onOpenModal(tour,'edit')">Edit</a>
+                              <a class="dropdown-item"(click)="onOpenModal(tour,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <!-- Add Stadium Modal -->
+<div class="modal fade" id="addTourModal" tabindex="-1" role="dialog" aria-labelledby="addTourModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addTourModalLabel">Add Tour</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddTour(addForm)">
+          <div class="form-group">
+            <label for="name">Designation of tour: </label>
+            <input type="text" ngModel name="designation" class="form-control" id="designation" placeholder="Designation of tour" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Max number of teams : </label>
+            <input type="number" ngModel name="numberTeamMax" class="form-control" id="numberTeamMax" placeholder="Max number of teams" required>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-tour-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="updateTourModal" tabindex="-1" role="dialog" aria-labelledby="TourEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateTourModalLabel">Edit Tour: {{editTour?.designation}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editTour?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">Tour Name : </label>
+                <input type="text" ngModel={{editTour?.designation}} name="designation" class="form-control" id="designation" placeholder="Designation of tour">
+             </div>
+             <div class="form-group">
+                <label for="name">Max number of teams : </label>
+                <input type="number" ngModel={{editTour?.numberTeamMax}} name="numberTeamMax" class="form-control" id="numberTeamMax" placeholder="Max number of teams" required>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateTour(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteTourModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Tour: {{deleteTour?.designation}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Tour {{deleteTour?.designation}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteTour(deleteTour?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+
+

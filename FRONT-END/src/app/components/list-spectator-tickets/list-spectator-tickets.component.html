@@ -1,0 +1,17 @@
+<div class="container">
+    <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2>
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-1">Type</div>
+        <div class="col col-2">Prix</div>
+        <div class="col col-3">Match</div>
+        <div class="col col-4">Identifiant(UUID)</div>
+      </li>
+      <li *ngFor="let t of tickets" class="table-row">
+        <div class="col col-1" data-label="Job Id">{{t.type}}</div>
+        <div class="col col-2" data-label="Customer Name">{{t.price}}</div>
+        <div class="col col-3" data-label="Amount">{{t.game.homeTeam.teamName}} - {{t.game.awayTeam.teamName}}</div>
+        <div class="col col-4" data-label="Payment Status">{{t.uuid}}</div>
+      </li>
+    </ul>
+  </div>

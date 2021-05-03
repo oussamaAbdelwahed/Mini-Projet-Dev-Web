@@ -1,0 +1,202 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Games of Tour : {{tour.designation}} </h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Games
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')"  class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Game Id</th>
+                      <th>Home Team</th>
+                      <th></th>
+                      <th>Away Team</th>
+                      <th>Staduim</th>
+                      <th>Referee</th>
+                      <th>Date</th>
+                      <th>Score</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let game of gamesOfCurrentTour'>
+                      <td>{{game.id}}</td>
+                      <td>{{game.homeTeam.teamName}}</td>
+                      <td>VS</td>
+                      <td>{{game.awayTeam.teamName}}</td>
+                      <td>{{game.stadium.stadiumName}}</td>
+                      <td>{{game.referee.firstname}} {{game.referee.lastname }}</td>
+                      <td>{{game.date | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{game.score}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(game,'edit')" >Change score</a>
+                              <a class="dropdown-item" (click)="onOpenModal(game,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+ <!-- Add Team Modal -->
+ <div class="modal fade" id="addGameModal" tabindex="-1" role="dialog" aria-labelledby="addGameModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addGameModalLabel">Add Game</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddGame(addForm)">
+            
+            <div class="form-group">
+              <label for="name">Date of Match *: </label>
+              <input type="date" ngModel name="date" id="date" class="form-control" min="2022-01-01" max="2022-12-31" required>
+            </div>
+            <div class="form-group">
+              <label>Home team *: </label>
+              <select class="custom-select" ngModel name="homeTeam" required>
+                <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+              </select>
+            </div>  
+            <div class="form-group">
+              <label>Away team *: </label>
+              <select class="custom-select" ngModel name="awayTeam" required>
+                <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Stadium *: </label>
+              <select class="custom-select" ngModel name="stadium" required>
+                <option *ngFor="let stadium of stadiums"  [ngValue]="stadium">{{stadium.stadiumName}}</option>
+              </select>
+            </div> 
+            <div class="form-group">
+              <label>Referee *: </label>
+              <select class="custom-select" ngModel name="referee" required>
+                <option *ngFor="let referee of referees"  [ngValue]="referee">{{referee.firstname}} {{referee.lastname}}</option>
+              </select>
+            </div>  
+            
+            <div class="form-group">
+              <label>Asistant Referee 1 *: </label>
+              <select class="custom-select" ngModel name="asistantReferee1">
+                <option *ngFor="let referee of asistantReferees"  [ngValue]="referee">{{referee.firstname}} {{referee.lastname}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Asistant Referee 2 *: </label>
+              <select class="custom-select" ngModel name="asistantReferee2">
+                <option *ngFor="let referee of asistantReferees"  [ngValue]="referee">{{referee.firstname}} {{referee.lastname}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Fourth Officiel *: </label>
+              <select class="custom-select" ngModel name="fourthOfficiel">
+                <option *ngFor="let referee of fourthOfficiels"  [ngValue]="referee">{{referee.firstname}} {{referee.lastname}}</option>
+              </select>
+            </div>
+          <div class="modal-footer">
+             <button type="button" id="add-game-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="deleteGameModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Game {{deleteGame?.id}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Game {{deleteGame?.id}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteGame(deleteGame?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateGameModal" tabindex="-1" role="dialog" aria-labelledby="gameEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateGameModalLabel">Edit Game Score :</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editGame?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">Score : </label>
+                <input type="text" ngModel="{{editGame?.score}}" name="score" class="form-control" id="score" placeholder="score">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateGame(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>

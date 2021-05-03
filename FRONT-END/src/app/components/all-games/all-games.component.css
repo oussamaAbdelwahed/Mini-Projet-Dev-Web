@@ -1,0 +1,12 @@
+table tr th{
+    background:#8d1b3d;
+    color:white;
+    text-align:left;
+    vertical-align:center;
+  }
+  .teamPhoto1 {
+    margin-left: 5px;
+  }
+  .teamPhoto2 {
+    margin-right: 5px;
+  }

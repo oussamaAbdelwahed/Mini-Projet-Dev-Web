@@ -1,0 +1,268 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Players</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" >
+      <div class="container-fluid" id ="main-container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of Players
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')" class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Lastname</th>
+                      <th>Firstname</th>
+                      <th>Gender</th>
+                      <th>Date of birth</th>
+                      <th>position</th>
+                      <th>Jersey number</th>
+                      <th>Team</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let player of players">
+                      <td>{{player.lastname}}</td>
+                      <td>{{player.firstname}}</td>
+                      <td *ngIf="player.sex === 'MAL'">Male</td>
+                      <td *ngIf="player.sex === 'FEM'">Female</td>
+                      <td>{{player.dateNaiss | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{player.position}}</td>
+                      <td>{{player.number}}</td>
+                      <td>{{player.teamOfPlayer.teamName}}</td>
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">Action</button>
+                          <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" (click)="onOpenModal(player,'edit')">Edit</a>
+                              <a class="dropdown-item" (click)="onOpenModal(player,'editTeam')">Edit Team</a>
+                              <a class="dropdown-item"(click)="onOpenModal(player,'delete')">Delete</a>
+                            </div>
+                          </button>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <!-- Add Team Modal -->
+<div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addPlayerModalLabel">Add Player</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddPlayer(addForm)">
+          <div class="form-group">
+             <label for="name">First name : </label>
+             <input type="text" ngModel name="firstname" class="form-control" id="firstname" placeholder="First name" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Last name : </label>
+            <input type="text" ngModel name="lastname" class="form-control" id="lastname" placeholder="Last name" required>
+         </div>
+         <div class="form-group">
+          <label for="name">Gender : </label>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+            <label class="form-check-label" for="exampleRadios1">
+             Male
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="sex" type="radio" id="exampleRadios2" value="FEM">
+            <label class="form-check-label" for="exampleRadios2">
+              Female
+            </label>
+          </div>
+       </div>
+       <div class="form-group">
+        <label for="name">CIN : </label>
+        <input type="number" ngModel name="cin" class="form-control" id="cin" placeholder="CIN" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Date of Birth : </label>
+        <input type="date" ngModel name="dateNaiss" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31" required>
+      </div>
+      <div class="form-group">
+        <label>Position : </label>
+        <select ngModel name="position" class="custom-select">
+          <option *ngFor="let palyerPosition of playerPositions" id="{{palyerPosition}}" value="{{palyerPosition}}">{{palyerPosition}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="name">Jersey number : </label>
+        <input type="number" ngModel name="number" class="form-control" id="number" placeholder="Jersey number" required>
+      </div>
+      <div class="form-group">
+        <label>Team : </label>
+        <select class="custom-select" ngModel name="teamOfPlayer">
+          <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+        </select>
+      </div>
+          <div class="modal-footer">
+             <button type="button" id="add-player-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="updatePlayerModal" tabindex="-1" role="dialog" aria-labelledby="playerEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updatePlayerModalLabel">Edit Player : {{editPlayer?.firstname}} {{editPlayer?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm = "ngForm">
+              <input type="hidden" ngModel="{{editPlayer?.id}}" name="id" class="form-control" id="id">
+              <div class="form-group">
+                <label for="name">First name : </label>
+                <input type="text" ngModel={{editPlayer?.firstname}} name="firstname" class="form-control" id="firstname" placeholder="First name">
+             </div>
+             <div class="form-group">
+              <label for="name">Last name : </label>
+              <input type="text" ngModel="{{editPlayer?.lastname}}" name="lastname" class="form-control" id="lastname" placeholder="Last name" >
+            </div>
+            <div class="form-group">
+              <label for="name">Gender : </label>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editPlayer?.sex}}" name="sex"  type="radio" id="exampleRadios1" value="MAL" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                 Male
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" ngModel="{{editPlayer?.sex}}" name="sex" type="radio" id="exampleRadios2" value="FEM">
+                <label class="form-check-label" for="exampleRadios2">
+                  Female
+                </label>
+              </div>
+           </div>
+           <div class="form-group">
+            <label for="name">CIN : </label>
+            <input type="number" ngModel="{{editPlayer?.cin}}" name="cin" class="form-control" id="cin" placeholder="CIN">
+          </div>
+          <div class="form-group">
+            <label for="name">Date of Birth : </label>
+            <input type="date" [ngModel]="editPlayer?.dateNaiss" name="dateNaiss" value="{{editPlayer?.dateNaiss}}" id="dateNaiss" class="form-control" min="1900-01-01" max="2000-12-31">
+          </div>
+          <div class="form-group">
+            <label>Position : </label>
+            <select ngModel="{{editPlayer?.position}}" name="position" class="custom-select">
+              <option *ngFor="let palyerPosition of playerPositions" id="{{palyerPosition}}" value="{{palyerPosition}}">{{palyerPosition}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name">Jersey number : </label>
+            <input type="number" ngModel="{{editPlayer?.number}}" name="number" class="form-control" id="number" placeholder="Jersey number" required>
+          </div>
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdatePlayer(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deletePlayerModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete Player {{deletePlayer?.firstname}} {{deletePlayer?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete Player {{deletePlayer?.firstname}} {{deletePlayer?.lastname}}?</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeletePlayer(deletePlayer?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="updatePlayerTeamModal" tabindex="-1" role="dialog" aria-labelledby="playerEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updatePlayerModalLabel">Edit Player : {{editPlayer?.firstname}} {{editPlayer?.lastname}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm2 = "ngForm">
+              <input type="hidden" ngModel="{{editPlayer?.id}}" name="id" class="form-control" id="id">
+          <div class="form-group" required>
+            <label>Team * : </label>
+            <select ngModel="{{editPlayer?.teamOfPlayer}}" name="teamOfPlayer" class="custom-select">
+              <option *ngFor="let team of teams"  [ngValue]="team">{{team.teamName}}</option>
+            </select>
+          </div>
+          
+              <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdatePlayerTeam(editForm2.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>

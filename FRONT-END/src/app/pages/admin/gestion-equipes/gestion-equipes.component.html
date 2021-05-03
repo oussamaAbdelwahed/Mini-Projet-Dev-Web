@@ -1,0 +1,177 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Managing Teams</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  List of teams
+                </h3>
+                <div class="card-tools">
+                  <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                    <button id="test" (click)="onOpenModal(null,'add')"class ='btn btn-primary active' type="button"  data-toggle="modal" data-target="#CreateTeam"><i class="fas fa-plus-circle"></i> Ajouter</button>
+                    </div>
+                  <!-- end Pop up -->
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="container" id ="main-container">
+                  <div class="row">
+                      <div *ngFor="let team of teams" class="col-md-6 col-xl-4">
+                          <div class="card m-b-30">
+                              <div class="card-body row">
+                                  <div class="col-6">
+                                      <a href=""><img src="{{team.photo}}" alt="" class="img-fluid rounded-circle w-60"></a>
+                                  </div>
+                                  <div class="col-6 card-title align-self-center mb-0">
+                                      <h5>Team name : {{team.teamName}}</h5>
+                                      <p *ngIf="team?.winner == true" class="m-0"> Won Last Game</p>
+                                      <p *ngIf="team?.winner == false" class="m-0"> Lost Last Game</p>
+                                  </div>
+                              </div>
+                              <div class="card-body">
+                                  <div class="float-right btn-group btn-group-sm">
+                                      <a  (click)="onOpenModal(team,'edit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i>Edit</a>
+                                      <a  (click)="onOpenModal(team,'delete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                     </div>
+              </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- Add Team Modal -->
+<div class="modal fade" id="addTeamModal" tabindex="-1" role="dialog" aria-labelledby="addTeamModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="addTeamModalLabel">Add Team</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #addForm="ngForm" (ngSubmit)="onAddTeam(addForm)">
+           <div class="form-group">
+              <label for="name">Team name : </label>
+              <input type="text" ngModel name="teamName" class="form-control" id="teamName" placeholder="Team name" required>
+           </div>
+           <div class="form-group">
+              <label for="phone">Image URL : </label>
+              <input type="text" ngModel name="photo" class="form-control" id="photo" placeholder="Image URL" required>
+           </div>
+           <div class="form-check">
+            <input class="form-check-input" ngModel name="winner"  type="radio" id="exampleRadios1" value="true" checked>
+            <label class="form-check-label" for="exampleRadios1">
+             Won last game
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" ngModel name="winner" type="radio" id="exampleRadios2" value="false">
+            <label class="form-check-label" for="exampleRadios2">
+              Lost last game
+            </label>
+          </div>
+           <div class="modal-footer">
+              <button type="button" id="add-team-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+           </div>
+           </form>
+        </div>
+     </div>
+   </div>
+   </div>
+
+   <!-- Edit Modal -->
+<div class="modal fade" id="updateTeamModal" tabindex="-1" role="dialog" aria-labelledby="teamEditModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="updateTeamModalLabel">Edit Team with id :{{editTeam?.id}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editForm = "ngForm">
+               <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" ngModel="{{editTeam?.teamName}}" name="teamName" class="form-control" id="teamName" aria-describedby="emailHelp" placeholder="Team name">
+               </div>
+               <input type="hidden" ngModel="{{editTeam?.id}}" name="id" class="form-control" id="id">
+               <div class="form-group">
+                  <label for="phone">Image URL</label>
+                  <input type="text"  ngModel="{{editTeam?.photo}}" name="photo" class="form-control" id="photo" placeholder="Image URL">
+               </div>
+               <div class="form-check">
+                  <input class="form-check-input" ngModel="{{editTeam?.winner}}" name="winner"  type="radio" id="exampleRadios1" value="true" checked>
+                  <label class="form-check-label" for="exampleRadios1">
+                   Won last game
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" ngModel="{{editTeam?.winner}}" name="winner" type="radio" id="exampleRadios2" value="false">
+                  <label class="form-check-label" for="exampleRadios2">
+                    Lost last game
+                  </label>
+                </div>
+               <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateTeam(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+ </div>
+
+ <div class="modal fade" id="deleteTeamModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Delete Team</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are you sure you want to delete Team {{deleteTeam?.teamName}}?</p>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+               <button (click)="onDeleteTeam(deleteTeam?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+            </div>
+         </div>
+      </div>
+   </div>
+ </div>
