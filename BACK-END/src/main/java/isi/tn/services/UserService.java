@@ -25,21 +25,19 @@ public class UserService implements UserDetailsService{
 	private PersonRepository personDao;
     
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Person person = personDao.findByEmail(username);
+	    Person person = personDao.findByEmail(username);
 		if(person == null){
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		
 		return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), getAuthority(person));
 	}
 	
 
-		private Set<SimpleGrantedAuthority> getAuthority(Person p) {
+	private Set<SimpleGrantedAuthority> getAuthority(Person p) {
 		String userNeededDataInFrontEnd = "{\"id\":"+p.getId()+",\"firstname\":\""+p.getFirstname()+"\",\"lastname\":\""+p.getLastname()+"\"}";
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 		if(p instanceof Referee) {
 			System.out.println("***********<***************<**************<**************<************FEFEREE INSTANCE ************>*****************>**************>****************>******");
-			 
 			authorities.add(new SimpleGrantedAuthority(userNeededDataInFrontEnd+";ROLE_REFEREE"));
 		}else if(p instanceof Admin) {
 			System.out.println("***********<***************<**************<**************<************ADMIN INSTANCE ************>*****************>**************>****************>******");

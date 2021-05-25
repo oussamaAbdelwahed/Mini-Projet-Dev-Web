@@ -26,26 +26,28 @@ public class SpectatorController {
 	@Autowired
 	private SpectatorService spectatorService;
 	
+	@PostMapping("signup")
+    public Boolean signupSpectator(@RequestBody Spectator s) {
+     	System.out.println("*****************************SPECTATOR SIGNUP*******************************");
+     	if(this.spectatorService.saveNewSpectator(s) != null)
+     		 return true;
+     	 
+     	return false;
+    }
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("{spectatorId}/delete")
 	public Boolean deleteSpectator(@PathVariable("spectatorId") Long spectatorId) {
 		return this.spectatorService.deleteSpectator(spectatorId);
 	}
 	
-     @PostMapping("signup")
-     public Boolean signupSpectator(@RequestBody Spectator s) {
-    	  System.out.println(s);
-    	  if(this.spectatorService.saveNewSpectator(s) != null)
-    		    return true;
-    	 
-    	  return false;
-     }
      
  	 @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SPECTATOR')")
      @GetMapping("{spectatorId}/get")
      public Spectator getSpectatorById(@PathVariable("spectatorId") Long spectatorId) {
     	 return this.spectatorService.getSpectatorById(spectatorId);
      }
+ 	
  	 
  	 @PreAuthorize("hasRole('ROLE_ADMIN')")
      @PostMapping("{id}/update")

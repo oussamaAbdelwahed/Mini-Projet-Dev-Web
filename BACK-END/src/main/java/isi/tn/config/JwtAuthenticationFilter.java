@@ -45,8 +45,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     	String header = req.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
-  
-        if (header != null && header.startsWith(TOKEN_PREFIX)) {
+        String path = req.getRequestURI();
+        //modifs added right thait of testing path if containing specific url due the fact that bearer token is sended when user authenticated and try to create an account or  re auhentificate
+        if (header != null && header.startsWith(TOKEN_PREFIX) && !path.contains("/spectator/signup") && !path.contains("/token/generate-token")) {
             authToken = header.replace(TOKEN_PREFIX,"");
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
